@@ -111,7 +111,7 @@ function Form() {
         createTransaction();
       }
     }
-  }, [segment, createTransaction, formData]);
+  }, [segment]);
 
   const selectedCategory =
     formData.type === 'Income' ? incomeCategories : expenseCategories;

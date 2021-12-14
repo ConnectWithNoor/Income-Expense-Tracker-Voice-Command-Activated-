@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import {
   PushToTalkButton,
   PushToTalkButtonContainer,
   ErrorPanel,
 } from '@speechly/react-ui';
+import { SpeechState, useSpeechContext } from '@speechly/react-client';
 
 import Details from './components/Details/Details';
 import Main from './components/Main/Main';
@@ -12,6 +13,19 @@ import useStyles from './styles';
 
 function App() {
   const classes = useStyles();
+  const { speechState } = useSpeechContext();
+  const mainRef = useRef(null);
+
+  const executeScroll = () => {
+    mainRef.current.scrollIntoView();
+  };
+
+  useEffect(() => {
+    if (speechState === SpeechState.Recording) {
+      executeScroll();
+    }
+  }, [speechState]);
+
   return (
     <div>
       <Grid
@@ -26,7 +40,7 @@ function App() {
           <Details title='Income' />
         </Grid>
 
-        <Grid item xs={12} sm={3} className={classes.main}>
+        <Grid ref={mainRef} item xs={12} sm={3} className={classes.main}>
           <Main />
         </Grid>
 

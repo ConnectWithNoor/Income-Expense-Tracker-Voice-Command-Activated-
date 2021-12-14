@@ -7,8 +7,6 @@ import { Provider } from './context/context';
 
 import './index.css';
 
-console.log(process.env);
-
 ReactDOM.render(
   <SpeechProvider
     appId={process.env.REACT_APP_SPEECHLY_APP_ID}

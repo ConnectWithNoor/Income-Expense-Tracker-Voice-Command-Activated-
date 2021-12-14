@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   List as MUIList,
   ListItem,
@@ -11,9 +11,12 @@ import {
 } from '@material-ui/core';
 import { Delete, MoneyOff } from '@material-ui/icons';
 
+import { ExpenseTrackerContext } from '../../../context/context';
+
 import useStyles from './style';
 
 function List() {
+  const { deleteTransaction, transactions } = useContext(ExpenseTrackerContext);
   const classes = useStyles();
 
   const txs = [
@@ -42,7 +45,7 @@ function List() {
 
   return (
     <MUIList dense={false} className={classes.list}>
-      {txs.map((tx) => (
+      {transactions.map((tx) => (
         <Slide direction='down' in mountOnEnter unmountOnExit key={tx.id}>
           <ListItem>
             <ListItemAvatar>
@@ -61,7 +64,13 @@ function List() {
               secondary={`$${tx.amount} - ${tx.date}`}
             />
             <ListItemSecondaryAction>
-              <IconButton edge='end' aria-label='Delete' onClick={() => {}}>
+              <IconButton
+                edge='end'
+                aria-label='Delete'
+                onClick={() => {
+                  deleteTransaction(tx.id);
+                }}
+              >
                 <Delete />
               </IconButton>
             </ListItemSecondaryAction>

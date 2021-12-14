@@ -12,6 +12,7 @@ import { ExpenseTrackerContext } from '../../context/context';
 import useStyles from './styles';
 import Form from './Form/Form';
 import List from './List/List';
+import InfoCard from '../InfoCard/InfoCard';
 
 function Main() {
   const { balance } = useContext(ExpenseTrackerContext);
@@ -28,7 +29,7 @@ function Main() {
           variant='subtitle1'
           style={{ lineHeight: '1.5em', marginTop: '20px' }}
         >
-          {/* Info card */}
+          <InfoCard />
         </Typography>
         <Divider />
         <Form />

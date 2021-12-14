@@ -11,6 +11,9 @@ import {
 } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
 import { useSpeechContext } from '@speechly/react-client';
+
+import Snackbar from '../../Snackbar/Snackbar';
+
 import {
   incomeCategories,
   expenseCategories,
@@ -34,6 +37,7 @@ function Form() {
   const { addTransaction } = useContext(ExpenseTrackerContext);
   const { segment } = useSpeechContext();
   const [formData, setFormData] = useState(initialState);
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
 
   const createTransaction = useCallback(() => {
@@ -47,6 +51,7 @@ function Form() {
     };
 
     addTransaction(transaction);
+    setOpen(true);
     setFormData(initialState);
   }, [addTransaction, formData]);
 
@@ -113,6 +118,7 @@ function Form() {
 
   return (
     <Grid container spacing={2}>
+      <Snackbar open={open} setOpen={setOpen} />
       <Grid item xs={12}>
         <Typography align='center' variant='subtitle2' gutterBottom>
           {segment && segment.words.map((w) => w.value).join(' ')}

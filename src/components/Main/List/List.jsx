@@ -19,30 +19,6 @@ function List() {
   const { deleteTransaction, transactions } = useContext(ExpenseTrackerContext);
   const classes = useStyles();
 
-  const txs = [
-    {
-      id: 1,
-      type: 'Income',
-      category: 'Salary',
-      amount: 50,
-      date: 'Tue Dec 14',
-    },
-    {
-      id: 2,
-      type: 'Expense',
-      category: 'Rent',
-      amount: 150,
-      date: 'Tue Dec 14',
-    },
-    {
-      id: 3,
-      type: 'Income',
-      category: 'Pet',
-      amount: 100,
-      date: 'Tue Dec 14',
-    },
-  ];
-
   return (
     <MUIList dense={false} className={classes.list}>
       {transactions.map((tx) => (

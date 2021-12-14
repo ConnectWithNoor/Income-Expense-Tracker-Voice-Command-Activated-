@@ -11,15 +11,21 @@ import {
 } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
 
+import {
+  incomeCategories,
+  expenseCategories,
+} from '../../../constant/categories';
+
 import { ExpenseTrackerContext } from '../../../context/context';
 
 import useStyles from './styles';
+import formatDate from '../../../utils/formatDate';
 
 const initialState = {
   amount: '',
   category: '',
   type: 'Income',
-  date: new Date(),
+  date: formatDate(new Date()),
 };
 
 function Form() {
@@ -37,6 +43,9 @@ function Form() {
     addTransaction(transaction);
     setFormData(initialState);
   };
+
+  const selectedCategory =
+    formData.type === 'Income' ? incomeCategories : expenseCategories;
 
   return (
     <Grid container spacing={2}>
@@ -74,8 +83,11 @@ function Form() {
               })
             }
           >
-            <MenuItem value='business'>Business</MenuItem>
-            <MenuItem value='salary'>Salary</MenuItem>
+            {selectedCategory.map((c) => (
+              <MenuItem key={c.type} value={c.type}>
+                {c.type}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -102,7 +114,7 @@ function Form() {
           onChange={(e) =>
             setFormData({
               ...formData,
-              date: e.target.value,
+              date: formatDate(e.target.value),
             })
           }
         />

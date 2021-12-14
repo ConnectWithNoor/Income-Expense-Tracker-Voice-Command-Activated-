@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import {
   TextField,
   Typography,
@@ -35,6 +35,20 @@ function Form() {
   const { segment } = useSpeechContext();
   const [formData, setFormData] = useState(initialState);
   const classes = useStyles();
+
+  const createTransaction = useCallback(() => {
+    if (Number.isNaN(Number(formData.amount)) || !formData.date.includes('-'))
+      return;
+
+    const transaction = {
+      ...formData,
+      amount: Number(formData.amount),
+      id: uuidv4(),
+    };
+
+    addTransaction(transaction);
+    setFormData(initialState);
+  }, [addTransaction, formData]);
 
   useEffect(() => {
     if (segment) {
@@ -92,21 +106,7 @@ function Form() {
         createTransaction();
       }
     }
-  }, [segment]);
-
-  const createTransaction = () => {
-    if (Number.isNaN(Number(formData.amount)) || !formData.date.includes('-'))
-      return;
-
-    const transaction = {
-      ...formData,
-      amount: Number(formData.amount),
-      id: uuidv4(),
-    };
-
-    addTransaction(transaction);
-    setFormData(initialState);
-  };
+  }, [segment, createTransaction, formData]);
 
   const selectedCategory =
     formData.type === 'Income' ? incomeCategories : expenseCategories;
@@ -137,7 +137,7 @@ function Form() {
       </Grid>
       <Grid item xs={6}>
         <FormControl fullWidth>
-          <InputLabel>Cateogy</InputLabel>
+          <InputLabel>Category</InputLabel>
           <Select
             value={formData.category}
             onChange={(e) =>

@@ -6,10 +6,14 @@ const ContextReducer = (state, action) => {
     case contextTypes.delete:
       trxs = state.filter((t) => t.id !== action.payload);
 
+      localStorage.setItem('transactions', JSON.stringify(trxs));
+
       return trxs;
 
     case contextTypes.add:
       trxs = [action.payload, ...state];
+
+      localStorage.setItem('transactions', JSON.stringify(trxs));
 
       return trxs;
 

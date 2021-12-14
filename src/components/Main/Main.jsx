@@ -26,7 +26,6 @@ function Main() {
           style={{ lineHeight: '1.5em', marginTop: '20px' }}
         >
           {/* Info card */}
-          Add Income
         </Typography>
         <Divider />
         <Form />
